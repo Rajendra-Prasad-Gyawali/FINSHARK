@@ -1,25 +1,31 @@
-import React, { JSX } from 'react'
+import React, { JSX, SyntheticEvent } from 'react'
 import "./Card.css"
+import { CompanySearch } from '../../company';
+import AddPortfolio from '../Portfolio/AddPortfolio/AddPortfolio';
 
 interface Props {
-    companyName: string;
-    ticker: string;
-    price: number;
+    id: string;
+    searchResult: CompanySearch;
+    onPortfolioCreate: (e: SyntheticEvent) => void;
+    // companyName: string;
+    // ticker: string;
+    // price: number;
 }
 
-const Card: React.FC<Props> = ({companyName, ticker, price}: Props): JSX.Element => {
+const Card: React.FC<Props> = ({id, searchResult, onPortfolioCreate}: Props): JSX.Element => {
   return <div className='card'>
         <img
             src='https://picsum.photos/200/300'
-            alt=''
+            alt='company logo'
         />
         <div className='details'>
-            <h2>{companyName} ({ticker})</h2>
-            <p>{price}$</p>
+            <h2>{searchResult.name} ({searchResult.symbol})</h2>
+            <p>{searchResult.currency}</p>
         </div>
         <p className='info'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer euismod, lectus a auctor faucibus, nibh mi suscipit lacus, nec sagittis est ante at justo. 
+            {searchResult.exchangeShortName} - {searchResult.stockExchange}
         </p>
+        <AddPortfolio onPortfolioCreate={onPortfolioCreate} symbol={searchResult.symbol} />
     </div>;
 };
 
